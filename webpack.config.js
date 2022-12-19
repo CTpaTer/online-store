@@ -22,7 +22,7 @@ const baseConfig = {
                 test: /\.(png|svg|jpg|jpeg|gif)$/i,
                 type: 'asset/resource',
                 generator: {
-                    filename: 'img/[name].[contenthash][ext]',
+                    filename: 'img/[name].[contenthash:8][ext]',
                 },
             },
         ],
@@ -31,7 +31,7 @@ const baseConfig = {
         extensions: ['.ts', '.js'],
     },
     output: {
-        filename: 'index.js',
+        filename: 'index.[contenthash:8].js',
         path: path.resolve(__dirname, './dist'),
     },
     plugins: [
