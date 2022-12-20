@@ -6,4 +6,4 @@ function component(text: string) {
     return element;
 }
 
-document.body.prepend(component('Проект собран на Webpack'));
+// document.body.prepend(component('Проект собран на Webpack'));

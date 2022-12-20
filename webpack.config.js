@@ -22,8 +22,12 @@ const baseConfig = {
                 test: /\.(png|svg|jpg|jpeg|gif)$/i,
                 type: 'asset/resource',
                 generator: {
-                    filename: 'img/[name].[contenthash:8][ext]',
+                    filename: 'assets/img/[name].[contenthash:8][ext]',
                 },
+            },
+            {
+                test: /\.(woff2?|eot|ttf|otf)$/i,
+                type: 'asset/resource',
             },
         ],
     },
@@ -41,7 +45,7 @@ const baseConfig = {
         }),
         new CleanWebpackPlugin(),
         new CopyPlugin({
-            patterns: [{ from: './src/img', to: './img' }],
+            patterns: [{ from: './src/assets', to: './assets' }],
         }),
         new EslingPlugin({ extensions: 'ts' }),
     ],
