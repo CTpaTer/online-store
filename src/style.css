@@ -60,6 +60,12 @@ html {
   justify-content: space-between;
 }
 
+.header__logo h1 {
+  font-weight: 300;
+  font-size: 5rem;
+  cursor: pointer;
+}
+
 .main {
   min-height: 85vh;
   width: 100%;
@@ -86,11 +92,41 @@ html {
 }
 
 .items {
+  display: flex;
+  flex-wrap: wrap;
   width: 74%;
   background: rgba(218, 218, 218, 0.5);
   border: 1px solid #9b9b9b;
   border-radius: 0.7rem;
   overflow: hidden;
+}
+
+.item {
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content:flex-start
+}
+
+.item__title {
+  display: flex;
+}
+
+.item__wrapper {
+  display: flex;
+}
+
+.item__photo img {
+  width: 200px;
+  height: 200px;
+  border-radius: 10px;
+  object-fit: cover;
+  vertical-align: middle;
+  border-style: none;
+}
+
+.props {
+  padding: 10px;
 }
 
 .footer {
