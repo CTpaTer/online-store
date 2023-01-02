@@ -1,7 +1,6 @@
 import { data, IDataItem } from './assets/data/data';
 import { LocalStorageUtil } from './localStorageUtil';
 import './style.css';
-console.log(data);
 const checks = document.querySelectorAll('input[type="checkbox"]');
 class Application {
     aciveClass: string;
@@ -9,12 +8,10 @@ class Application {
         this.aciveClass = 'active';
 
         checks.forEach((item) => {
-            item.addEventListener('click', (event) => {
-                const target = event.target as HTMLInputElement;
+            item.addEventListener('click', () => {
+                // const target = event.target as HTMLInputElement;
 
                 this.onClickEvent();
-
-                console.log(item);
             });
         });
 
@@ -24,12 +21,10 @@ class Application {
             throw new Error('undefined');
         }
 
-        search.addEventListener('input', (event) => {
-            const target = event.target as HTMLInputElement;
+        search.addEventListener('input', () => {
+            // const target = event.target as HTMLInputElement;
 
             this.onClickEvent();
-
-            console.log(this);
         });
 
         document.querySelector('.clear-button')!.addEventListener('click', () => {
@@ -46,7 +41,7 @@ class Application {
         const items = document.querySelectorAll('.item');
 
         items.forEach((item) => {
-            item.addEventListener('click', (event) => {
+            item.addEventListener('click', () => {
                 const id = item.getAttribute('data-id');
                 const { isPushed, products } = storage.putProducts(id);
 
@@ -56,20 +51,20 @@ class Application {
                     item.classList.remove('active');
                 }
 
-                this.createHeaderCounter(products.length);
+                // this.createHeaderCounter(products.length);
             });
         });
     }
 
-    public createHeader(): void {
-        const header = document.createElement('header');
-        header.classList.add('header');
-        document.body.prepend(header);
-    }
+    // public createHeader(): void {
+    //     const header = document.createElement('header');
+    //     header.classList.add('header');
+    //     document.body.prepend(header);
+    // }
 
-    public createHeaderCounter(count: number): number {
-        return count;
-    }
+    // public createHeaderCounter(count: number): number {
+    //     return count;
+    // }
     public renderItems(data: IDataItem[]): void {
         const itemsContainer = document.querySelector('.items') as HTMLElement;
         let htmlCatalog = '';
@@ -84,28 +79,29 @@ class Application {
             let activeClass = '';
 
             if (catalog.indexOf(elem.id) === -1) {
-                console.log(elem.id);
+                // console.log(elem.id);
             } else {
                 activeClass = ' ' + this.aciveClass;
             }
 
             htmlCatalog += `
             <div class="item${activeClass}" data-id="${elem.id}">
-                <h2>${elem.name}</h2>             
-                <div class="props">
-                   <h3>quantity: ${elem.quantity}</h3>
-                   
-                   <h3>price: ${elem.price}</h3>
-                    <h3>discountPercentage: ${elem.discountPercentage}</h3>
-                    <h3>rating: ${elem.rating}</h3>
-                    <h3>stock: ${elem.stock}</h3>
-                    <h3>brand: ${elem.brand}</h3>
-                    <h3>category: ${elem.category}</h3>
-                    <h3>thumbnail: ${elem.thumbnail}</h3>
-                    <h3>rating: ${elem.rating}</h3>
-                    <img src=${elem.thumbnail}>
-                   
+                <div class="item__title">
+                <h2>${elem.name}</h2>
                 </div>
+                <div class="item__wrapper">
+                    <div class="item__photo">
+                    <img src=${elem.thumbnail}>
+                    </div>
+                    <div class="props">
+                    <h3>price: ${elem.price}</h3>
+                        <h3>discountPercentage: ${elem.discountPercentage}</h3>
+                        <h3>rating: ${elem.rating}</h3>
+                        <h3>stock: ${elem.stock}</h3>
+                        <h3>brand: ${elem.brand}</h3>
+                        <h3>category: ${elem.category}</h3>
+                        <h3>rating: ${elem.rating}</h3>
+                    </div>
                 </div>
             </div>`;
         });
@@ -115,7 +111,7 @@ class Application {
     }
 
     public render(data: IDataItem[]): void {
-        this.createHeader();
+        // this.createHeader();
         this.renderItems(data);
     }
 }
@@ -152,8 +148,6 @@ class Products {
         );
 
         this.filteredData = result;
-
-        console.log(result);
 
         return result;
     }
