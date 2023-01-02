@@ -9,15 +9,85 @@
 </head>
 <body class="body">
     <header class="header">
-        <div class="header__logo">Logo</div>
-        <div class="header__total">Total</div>
-        <div class="header__basket">Basket</div>
+        <div class="header__logo"><h1>Online store</h1></div>
+        <div class="header__total">Cart total: €<span class="header__total_price">0</span></div>
+        <div class="header__basket">Basket: <span class="header__basket_count">0</span></div>
     </header>
-    <main class="main-general">
-        <div class="main-general__wrapper">
-            <div class="filters"></div>
-            <div class="products"></div>
+
+    <main class="main">
+        <div class="main__wrapper">
+            <div class="filters">
+
+                <div class="container">
+                           <h3>Категория</h3>
+                           <div id="categorys">
+                               <div class="checkbox"><label><input type="checkbox" name="brands[]" value="smartphones"> smartphones</label>
+                               </div>
+                               <div class="checkbox"><label><input type="checkbox" name="brands[]" value="laptops"> laptops</label>
+                               </div>
+                               <div class="checkbox"><label><input type="checkbox" name="brands[]" value="fragrances"> fragrances</label>
+                               </div>
+                               <div class="checkbox"><label><input type="checkbox" name="brands[]" value="skincare"> skincare</label>
+                               </div>
+                               <div class="checkbox"><label><input type="checkbox" name="brands[]" value="groceries"> groceries</label>
+                               </div>
+                           </div>
+                       </div> 
+                        <div>
+                            <h3>Бренды</h3>
+                            <div id="brands">
+                                <div class="checkbox"><label><input type="checkbox" name="brand" value="Apple">
+                                        Apple</label></div>
+                                <div class="checkbox"><label><input type="checkbox" name="brand" value="Samsung">
+                                        Samsung</label></div>
+                                <div class="checkbox"><label><input type="checkbox" name="brand" value="OPPO">
+                                        OPPO</label></div>
+                                <div class="checkbox"><label><input type="checkbox" name="brand" value="Huawei">
+                                        Huawei</label></div>
+                                        <div class="checkbox"><label><input type="checkbox" name="brand" value="Microsoft Surface">
+                                            Microsoft Surface</label></div>
+                                <div class="checkbox"><label><input type="checkbox" name="brand" value="Infinix">
+                                        Infinix</label></div>
+                                <div class="checkbox"><label><input type="checkbox" name="brand" value="HP Pavilion">
+                                        HP Pavilion</label></div>
+                                        <div class="checkbox"><label><input type="checkbox" name="brand" value="Impression">
+                                            Impression</label></div>
+                                <div class="checkbox"><label><input type="checkbox" name="brand" value="Royal_Mirage">
+                                        Royal_Mirage</label></div>
+                                <div class="checkbox"><label><input type="checkbox" name="brand" value="Fog Scent Xpressio">
+                                        Fog Scent Xpressio</label></div>
+                                <div class="checkbox"><label><input type="checkbox" name="brand" value="Al Munakh">
+                                        Al Munakh</label></div>
+                                <div class="checkbox"><label><input type="checkbox" name="brand" value="Lord - Al-Rehab">
+                                        Lord - Al-Rehab</label></div>
+                                <div class="checkbox"><label><input type="checkbox" name="brand" value="L Oreal Paris">
+                                    L'Oreal Paris</label></div>
+                                <div class="checkbox"><label><input type="checkbox" name="brand" value="Hemani Tea">
+                                    Hemani Tea</label></div>
+                                <div class="checkbox"><label><input type="checkbox" name="brand" value="Dermive">
+                                    Dermive</label></div>
+                                <div class="checkbox"><label><input type="checkbox" name="brand" value="ROREC White Rice">
+                                    ROREC White Rice</label></div>
+                                <div class="checkbox"><label><input type="checkbox" name="brand" value="Fair & Clear">
+                                    Fair & Clear</label></div>
+                                <div class="checkbox"><label><input type="checkbox" name="brand" value="Saaf & Khaas">
+                                    Saaf & Khaas</label></div>                           
+                        </div>        
+                    </div>
+                        <div class="horizontal-filter">
+                            <div class="horizontal-filter__wrapper">
+                                 <div class="searchWrapper">
+                                    <input class="search" type="text" placeholder="Введите что-нибудь..."
+                                        autocomplete="off">
+                                    <span class="clear-button"></span>
+                                </div>
+                            </div>
+                        </div> 
+                    </div>
+                </div>
+            </div>
         </div>
+        <div class="items"></div> 
     </main>
     <footer class="footer">
         <div class="footer-container">
@@ -33,4 +103,5 @@
         </div>
     </footer>
 </body>
+
 </html>

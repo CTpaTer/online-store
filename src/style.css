@@ -60,7 +60,7 @@ html {
   justify-content: space-between;
 }
 
-.main-general {
+.main {
   min-height: 85vh;
   width: 100%;
   padding: 2%;
@@ -68,7 +68,8 @@ html {
   justify-content: center;
 }
 
-.main-general__wrapper {
+
+.main__wrapper {
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -84,7 +85,7 @@ html {
   height: fit-content;
 }
 
-.products {
+.items {
   width: 74%;
   background: rgba(218, 218, 218, 0.5);
   border: 1px solid #9b9b9b;
