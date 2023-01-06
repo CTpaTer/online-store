@@ -66,6 +66,10 @@ html {
   cursor: pointer;
 }
 
+.header__basket {
+  cursor: pointer;
+}
+
 .main {
   min-height: 85vh;
   width: 100%;
@@ -94,6 +98,7 @@ html {
 .items {
   display: flex;
   flex-wrap: wrap;
+  padding: 10px;
   width: 74%;
   background: rgba(218, 218, 218, 0.5);
   border: 1px solid #9b9b9b;
@@ -102,10 +107,14 @@ html {
 }
 
 .item {
-  padding: 30px;
+  width: 380px;
+  padding: 10px;
   display: flex;
   flex-direction: column;
-  justify-content:flex-start
+  justify-content:flex-start;
+  border: 1px solid #9b9b9b;
+  border-radius: 0.7rem;
+  margin: 5px;
 }
 
 .item__title {
@@ -126,6 +135,20 @@ html {
 }
 
 .props {
+  padding: 10px;
+}
+
+.item__buttons {
+  padding: 10px 0;
+  display: flex;
+}
+
+.item__button_add {
+  padding: 10px;
+  margin-right: 10px;
+}
+
+.item__button_details {
   padding: 10px;
 }
 

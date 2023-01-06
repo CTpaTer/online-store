@@ -1,9 +1,29 @@
 import { data, IDataItem } from './assets/data/data';
 import { LocalStorageUtil } from './localStorageUtil';
 import './style.css';
+import { ProductDetail } from './pages/product-details/product-details';
+import { Basket } from './pages/basket/basket';
+
 const checks = document.querySelectorAll('input[type="checkbox"]');
+const mainPage = document.querySelector('.main__wrapper') as HTMLElement;
+
+const summ = Number(localStorage.getItem('TotalPrice'));
+const counter = Number(localStorage.getItem('basketCount'));
+const totalPrice: HTMLElement | null = document.querySelector('.header__total_price');
+const basketCount: HTMLElement | null = document.querySelector('.header__basket_count');
+
+if (!localStorage.getItem('TotalPrice')) {
+    localStorage.setItem('TotalPrice', '0');
+}
+
+if (!localStorage.getItem('basketCount')) {
+    localStorage.setItem('basketCount', '0');
+}
+
 class Application {
     aciveClass: string;
+    private ProductDetail: ProductDetail;
+    private Basket: Basket;
     constructor() {
         this.aciveClass = 'active';
 
@@ -27,9 +47,44 @@ class Application {
             this.onClickEvent();
         });
 
-        document.querySelector('.clear-button')!.addEventListener('click', () => {
-            search.value = '';
-            this.onClickEvent();
+        // document.querySelector('.clear-button')!.addEventListener('click', () => {
+        //     search.value = '';
+        //     this.onClickEvent();
+        // });
+
+        const clickHeaderLogo = document.querySelector('.header__logo') as HTMLElement;
+        clickHeaderLogo.addEventListener('click', () => {
+            window.location.replace('./index.html');
+        });
+
+        const clickHeaderBasket = document.querySelector('.header__basket') as HTMLElement;
+        clickHeaderBasket.addEventListener('click', () => {
+            this.Basket = new Basket();
+            mainPage.innerHTML = '';
+            mainPage.appendChild(this.Basket.container);
+        });
+
+        if (totalPrice) {
+            totalPrice.innerText = `${summ}`;
+        }
+
+        if (basketCount) {
+            basketCount.innerText = `${counter}`;
+        }
+
+        document.addEventListener('click', (e) => {
+            const buttonContent = e.target as HTMLButtonElement;
+            const parentButton = buttonContent.parentNode as HTMLElement;
+            const numberOfItem = Number(parentButton.classList[1]);
+            const buttonAdd = buttonContent.classList[0] === 'item__button_add';
+            const buttonDetails = buttonContent.classList[0] === 'item__button_details';
+            if (buttonContent.tagName === 'BUTTON' && buttonAdd) {
+                console.log(numberOfItem);
+            } else if (buttonContent.tagName === 'BUTTON' && buttonDetails) {
+                this.ProductDetail = new ProductDetail(numberOfItem - 1);
+                mainPage.innerHTML = '';
+                mainPage.appendChild(this.ProductDetail.container);
+            }
         });
     }
 
@@ -37,24 +92,24 @@ class Application {
         this.renderItems(products.filter());
     }
 
-    clickBasket(): void {
-        const items = document.querySelectorAll('.item');
+    // clickBasket(): void {
+    //     const items = document.querySelectorAll('.item');
 
-        items.forEach((item) => {
-            item.addEventListener('click', () => {
-                const id = item.getAttribute('data-id');
-                const { isPushed, products } = storage.putProducts(id);
+    //     items.forEach((item) => {
+    //         item.addEventListener('click', () => {
+    //             const id = item.getAttribute('data-id');
+    //             const { isPushed, products } = storage.putProducts(id);
 
-                if (isPushed) {
-                    item.classList.add('active');
-                } else {
-                    item.classList.remove('active');
-                }
+    //             if (isPushed) {
+    //                 item.classList.add('active');
+    //             } else {
+    //                 item.classList.remove('active');
+    //             }
 
-                // this.createHeaderCounter(products.length);
-            });
-        });
-    }
+    //             // this.createHeaderCounter(products.length);
+    //         });
+    //     });
+    // }
 
     // public createHeader(): void {
     //     const header = document.createElement('header');
@@ -103,11 +158,15 @@ class Application {
                         <h3>rating: ${elem.rating}</h3>
                     </div>
                 </div>
+                <div class="item__buttons ${elem.id}">
+                <button class="item__button_add">ADD TO CART</button>
+                <button class="item__button_details">DETAILS</button>
+                </div>
             </div>`;
         });
 
         itemsContainer.innerHTML = htmlCatalog;
-        this.clickBasket();
+        // this.clickBasket();
     }
 
     public render(data: IDataItem[]): void {
@@ -128,9 +187,9 @@ class Products {
     }
 
     filter() {
-        const search = document.querySelector('.search') as HTMLInputElement | null;
+        const search = document.querySelector('.search') as HTMLInputElement;
 
-        const filter = search!.value.toLowerCase();
+        const filter = search.value.toLowerCase();
 
         const brands = [...document.querySelectorAll('#brands input:checked')].map(
             (input) => (input as HTMLInputElement).value
@@ -139,7 +198,7 @@ class Products {
             (input) => (input as HTMLInputElement).value
         );
 
-        console.log(brands, categorys);
+        // console.log(brands, categorys);
         const result = this.data.filter(
             (elem) =>
                 (!brands.length || brands.includes(elem.brand)) &&
