@@ -3,14 +3,7 @@ import DataProducts from '../../assets/data/products.json';
 import { BaseComponent } from '../../components/base-component';
 import { IData } from '../../components/interfaces';
 import createNewElement from '../../components/createNewElement';
-
-// if (!localStorage.getItem('TotalPrice')) {
-//     localStorage.setItem('TotalPrice', '0');
-// }
-
-// if (!localStorage.getItem('basketCount')) {
-//     localStorage.setItem('basketCount', '0');
-// }
+import { LocalStorageUtil } from '../../localStorageUtil';
 
 export class ProductDetail extends BaseComponent {
     data: IData;
@@ -28,12 +21,13 @@ export class ProductDetail extends BaseComponent {
     spanPrice: HTMLElement;
     buttonAddToCard: HTMLElement;
     buttonBuyNow: HTMLElement;
+    private LocalStorageUtil: LocalStorageUtil;
 
     constructor(idNumber: number) {
         super('div', ['product-details']);
         this.data = DataProducts.products[idNumber];
-        let summ = Number(localStorage.getItem('TotalPrice'));
-        let counter = Number(localStorage.getItem('basketCount'));
+        let summ = storage.showTotalprice();
+        let counter = storage.showBasket();
         const totalPrice: HTMLElement | null = document.querySelector('.header__total_price');
         const basketCount: HTMLElement | null = document.querySelector('.header__basket_count');
 
@@ -102,7 +96,7 @@ export class ProductDetail extends BaseComponent {
         this.container.appendChild(this.productTitle);
         this.container.appendChild(this.productData);
 
-        if (localStorage.getItem(`${this.data.id}`)) {
+        if (storage.checkProduct(this.data.id)) {
             this.buttonAddToCard.innerText = 'DROP FROM CART';
         }
 
@@ -118,36 +112,44 @@ export class ProductDetail extends BaseComponent {
             const imgContent = e.target as HTMLImageElement;
             const buttonContent = e.target as HTMLButtonElement;
             const buttonAdd = buttonContent.classList[0] === 'button-add-to-card';
+            const buttonBuy = buttonContent.classList[0] === 'button-buy-now';
             if (imgContent.tagName === 'IMG') {
                 const changeMainImg: HTMLElement | null = document.querySelector('.main-img');
                 if (changeMainImg) {
                     this.imgPhotoMain.src = imgContent.src;
                 }
             } else if (buttonContent.tagName === 'BUTTON' && buttonAdd) {
-                if (!localStorage.getItem(`${this.data.id}`)) {
+                if (!storage.checkProduct(this.data.id)) {
                     this.buttonAddToCard.innerText = 'DROP FROM CART';
-                    if (totalPrice && basketCount) {
-                        summ += this.data.price;
+                    const product = { id: this.data.id, count: 1, price: this.data.price };
+                    storage.putProducts(product);
+                    if (totalPrice) {
+                        summ = storage.showTotalprice();
                         totalPrice.innerText = `${summ}`;
-                        localStorage.setItem('TotalPrice', `${summ}`);
-                        counter++;
-                        basketCount.innerText = `${counter}`;
-                        localStorage.setItem('basketCount', `${counter}`);
                     }
-                    localStorage.setItem(`${this.data.id}`, `${this.data.title}`);
-                } else {
-                    localStorage.removeItem(`${this.data.id}`);
-                    this.buttonAddToCard.innerText = 'ADD TO CART';
-                    if (totalPrice && basketCount) {
-                        summ -= this.data.price;
-                        totalPrice.innerText = `${summ}`;
-                        localStorage.setItem('TotalPrice', `${summ}`);
-                        counter--;
+
+                    if (basketCount) {
+                        counter = storage.showBasket();
                         basketCount.innerText = `${counter}`;
-                        localStorage.setItem('basketCount', `${counter}`);
+                    }
+                } else {
+                    storage.removeProducts(this.data.id);
+                    this.buttonAddToCard.innerText = 'ADD TO CART';
+                    if (totalPrice) {
+                        summ = storage.showTotalprice();
+                        totalPrice.innerText = `${summ}`;
+                    }
+
+                    if (basketCount) {
+                        counter = storage.showBasket();
+                        basketCount.innerText = `${counter}`;
                     }
                 }
+            } else if (buttonContent.tagName === 'BUTTON' && buttonBuy) {
+                storage.showTotalprice();
             }
         });
     }
 }
+
+const storage = new LocalStorageUtil();
