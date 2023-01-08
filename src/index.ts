@@ -7,23 +7,17 @@ import { Basket } from './pages/basket/basket';
 const checks = document.querySelectorAll('input[type="checkbox"]');
 const mainPage = document.querySelector('.main__wrapper') as HTMLElement;
 
-const summ = Number(localStorage.getItem('TotalPrice'));
-const counter = Number(localStorage.getItem('basketCount'));
+const storage = new LocalStorageUtil();
+let summ = storage.showTotalprice();
+let counter = storage.showBasket();
 const totalPrice: HTMLElement | null = document.querySelector('.header__total_price');
 const basketCount: HTMLElement | null = document.querySelector('.header__basket_count');
-
-if (!localStorage.getItem('TotalPrice')) {
-    localStorage.setItem('TotalPrice', '0');
-}
-
-if (!localStorage.getItem('basketCount')) {
-    localStorage.setItem('basketCount', '0');
-}
 
 class Application {
     aciveClass: string;
     private ProductDetail: ProductDetail;
     private Basket: Basket;
+    buttonAddToCard: HTMLElement;
     constructor() {
         this.aciveClass = 'active';
 
@@ -76,12 +70,40 @@ class Application {
             const buttonContent = e.target as HTMLButtonElement;
             const parentButton = buttonContent.parentNode as HTMLElement;
             const numberOfItem = Number(parentButton.classList[1]);
+            const indexOfItem = numberOfItem - 1;
             const buttonAdd = buttonContent.classList[0] === 'item__button_add';
             const buttonDetails = buttonContent.classList[0] === 'item__button_details';
             if (buttonContent.tagName === 'BUTTON' && buttonAdd) {
-                console.log(numberOfItem);
+                const dataID = Number(data[indexOfItem].id);
+                const dataPrice = Number(data[indexOfItem].price);
+                const product = { id: dataID, count: 1, price: dataPrice };
+                if (!storage.checkProduct(indexOfItem + 1)) {
+                    buttonContent.innerText = 'DROP FROM CART';
+                    storage.putProducts(product);
+                    if (totalPrice) {
+                        summ = storage.showTotalprice();
+                        totalPrice.innerText = `${summ}`;
+                    }
+
+                    if (basketCount) {
+                        counter = storage.showBasket();
+                        basketCount.innerText = `${counter}`;
+                    }
+                } else {
+                    buttonContent.innerText = 'ADD TO CART';
+                    storage.removeProducts(dataID);
+                    if (totalPrice) {
+                        summ = storage.showTotalprice();
+                        totalPrice.innerText = `${summ}`;
+                    }
+
+                    if (basketCount) {
+                        counter = storage.showBasket();
+                        basketCount.innerText = `${counter}`;
+                    }
+                }
             } else if (buttonContent.tagName === 'BUTTON' && buttonDetails) {
-                this.ProductDetail = new ProductDetail(numberOfItem - 1);
+                this.ProductDetail = new ProductDetail(indexOfItem);
                 mainPage.innerHTML = '';
                 mainPage.appendChild(this.ProductDetail.container);
             }
@@ -173,6 +195,18 @@ class Application {
         // this.createHeader();
         this.renderItems(data);
     }
+
+    public checkButtons() {
+        const buttons = document.querySelectorAll('.item__button_add');
+        buttons.forEach((button) => {
+            const parentButton = button.parentNode as HTMLElement;
+            const numberOfItem = Number(parentButton.classList[1]);
+            // const indexOfItem = numberOfItem - 1;
+            if (storage.checkProduct(numberOfItem)) {
+                button.innerHTML = 'DROP FROM CART';
+            }
+        });
+    }
 }
 
 class Products {
@@ -213,7 +247,8 @@ class Products {
 }
 
 const app = new Application();
-const storage = new LocalStorageUtil();
+// const storage = new LocalStorageUtil();
 const products = new Products(data);
 
 app.render(data);
+app.checkButtons();
