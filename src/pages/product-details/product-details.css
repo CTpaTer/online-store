@@ -1,6 +1,4 @@
 .product-details {
-    /* height: -moz-fit-content;
-    height: fit-content; */
     display: flex;
     flex-direction: column;
     margin: 0 auto;
@@ -20,8 +18,6 @@
     padding: 20px 20px;
 }
 
-.span-path {
-}
 .span-title {
     font-size: 3rem;
 }

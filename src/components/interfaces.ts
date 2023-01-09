@@ -11,3 +11,9 @@ export interface IData {
     thumbnail: string;
     images: Array<string>;
 }
+
+export type ObjectLocalStorage = {
+    id: number;
+    count: number;
+    price: number;
+};
