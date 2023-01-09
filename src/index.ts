@@ -226,3 +226,15 @@ sortPriceDesc.addEventListener('click', () => {
     data.sort((a, b) => +b.price - +a.price);
     app.renderItems(data);
 });
+
+const sortRatingIncr = document.querySelector('#sort-rating_increase') as HTMLElement;
+sortRatingIncr.addEventListener('click', () => {
+    data.sort((a, b) => +a.rating - +b.rating);
+    app.renderItems(data);
+});
+
+const sortRatingDesc = document.querySelector('#sort-rating_descending') as HTMLElement;
+sortRatingDesc.addEventListener('click', () => {
+    data.sort((a, b) => +b.rating - +a.rating);
+    app.renderItems(data);
+});
