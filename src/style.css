@@ -108,6 +108,7 @@ html {
 
 .item {
   width: 380px;
+  height: fit-content;
   padding: 10px;
   display: flex;
   flex-direction: column;
@@ -146,10 +147,12 @@ html {
 .item__button_add {
   padding: 10px;
   margin-right: 10px;
+  cursor: pointer;
 }
 
 .item__button_details {
   padding: 10px;
+  cursor: pointer;
 }
 
 .footer {

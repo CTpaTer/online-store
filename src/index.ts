@@ -26,6 +26,7 @@ class Application {
                 // const target = event.target as HTMLInputElement;
 
                 this.onClickEvent();
+                this.checkButtons();
             });
         });
 
@@ -36,15 +37,9 @@ class Application {
         }
 
         search.addEventListener('input', () => {
-            // const target = event.target as HTMLInputElement;
-
             this.onClickEvent();
+            this.checkButtons();
         });
-
-        // document.querySelector('.clear-button')!.addEventListener('click', () => {
-        //     search.value = '';
-        //     this.onClickEvent();
-        // });
 
         const clickHeaderLogo = document.querySelector('.header__logo') as HTMLElement;
         clickHeaderLogo.addEventListener('click', () => {
@@ -114,34 +109,6 @@ class Application {
         this.renderItems(products.filter());
     }
 
-    // clickBasket(): void {
-    //     const items = document.querySelectorAll('.item');
-
-    //     items.forEach((item) => {
-    //         item.addEventListener('click', () => {
-    //             const id = item.getAttribute('data-id');
-    //             const { isPushed, products } = storage.putProducts(id);
-
-    //             if (isPushed) {
-    //                 item.classList.add('active');
-    //             } else {
-    //                 item.classList.remove('active');
-    //             }
-
-    //             // this.createHeaderCounter(products.length);
-    //         });
-    //     });
-    // }
-
-    // public createHeader(): void {
-    //     const header = document.createElement('header');
-    //     header.classList.add('header');
-    //     document.body.prepend(header);
-    // }
-
-    // public createHeaderCounter(count: number): number {
-    //     return count;
-    // }
     public renderItems(data: IDataItem[]): void {
         const itemsContainer = document.querySelector('.items') as HTMLElement;
         let htmlCatalog = '';
@@ -188,11 +155,9 @@ class Application {
         });
 
         itemsContainer.innerHTML = htmlCatalog;
-        // this.clickBasket();
     }
 
     public render(data: IDataItem[]): void {
-        // this.createHeader();
         this.renderItems(data);
     }
 
@@ -201,7 +166,6 @@ class Application {
         buttons.forEach((button) => {
             const parentButton = button.parentNode as HTMLElement;
             const numberOfItem = Number(parentButton.classList[1]);
-            // const indexOfItem = numberOfItem - 1;
             if (storage.checkProduct(numberOfItem)) {
                 button.innerHTML = 'DROP FROM CART';
             }
@@ -232,7 +196,6 @@ class Products {
             (input) => (input as HTMLInputElement).value
         );
 
-        // console.log(brands, categorys);
         const result = this.data.filter(
             (elem) =>
                 (!brands.length || brands.includes(elem.brand)) &&
@@ -247,7 +210,6 @@ class Products {
 }
 
 const app = new Application();
-// const storage = new LocalStorageUtil();
 const products = new Products(data);
 
 app.render(data);
