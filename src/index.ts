@@ -214,23 +214,3 @@ const products = new Products(data);
 
 app.render(data);
 app.checkButtons();
-const sortPriceIncr = document.querySelector('#sort-price_increase') as HTMLElement;
-sortPriceIncr.addEventListener('click', () => {
-    data.sort((a, b) => +a.price - +b.price);
-    app.renderItems(data);
-});
-const sortPriceDesc = document.querySelector('#sort-price_descending') as HTMLElement;
-sortPriceDesc.addEventListener('click', () => {
-    data.sort((a, b) => +b.price - +a.price);
-    app.renderItems(data);
-});
-const sortRatingIncr = document.querySelector('#sort-rating_increase') as HTMLElement;
-sortRatingIncr.addEventListener('click', () => {
-    data.sort((a, b) => +a.rating - +b.rating);
-    app.renderItems(data);
-});
-const sortRatingDesc = document.querySelector('#sort-rating_descending') as HTMLElement;
-sortRatingDesc.addEventListener('click', () => {
-    data.sort((a, b) => +b.rating - +a.rating);
-    app.renderItems(data);
-});
