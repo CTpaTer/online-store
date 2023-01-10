@@ -217,23 +217,30 @@ app.checkButtons();
 
 const sortPriceIncr = document.querySelector('#sort-price_increase') as HTMLElement;
 sortPriceIncr.addEventListener('click', () => {
-    data.sort((a, b) => +a.price - +b.price);
-    app.renderItems(data);
+    products.filteredData.sort((a, b) => +a.price - +b.price);
+    app.renderItems(products.filteredData);
 });
+
 const sortPriceDesc = document.querySelector('#sort-price_descending') as HTMLElement;
 sortPriceDesc.addEventListener('click', () => {
-    data.sort((a, b) => +b.price - +a.price);
-    app.renderItems(data);
+    products.filteredData.sort((a, b) => +b.price - +a.price);
+    app.renderItems(products.filteredData);
 });
 
 const sortRatingIncr = document.querySelector('#sort-rating_increase') as HTMLElement;
 sortRatingIncr.addEventListener('click', () => {
-    data.sort((a, b) => +a.rating - +b.rating);
-    app.renderItems(data);
+    products.filteredData.sort((a, b) => +a.rating - +b.rating);
+    app.renderItems(products.filteredData);
 });
 
 const sortRatingDesc = document.querySelector('#sort-rating_descending') as HTMLElement;
 sortRatingDesc.addEventListener('click', () => {
-    data.sort((a, b) => +b.rating - +a.rating);
-    app.renderItems(data);
+    products.filteredData.sort((a, b) => +b.rating - +a.rating);
+    app.renderItems(products.filteredData);
+});
+
+const resetFilter = document.querySelector('#reset-filters') as HTMLElement;
+resetFilter.addEventListener('click', () => {
+    products.filteredData = data;
+    app.renderItems(products.filteredData);
 });
