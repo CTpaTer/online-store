@@ -239,18 +239,11 @@ sortRatingDesc.addEventListener('click', () => {
     app.renderItems(products.filteredData);
 });
 
-<<<<<<< HEAD
 const checkBoxes = document.querySelectorAll('input') as NodeListOf<HTMLInputElement>;
 
 const resetFilter = document.querySelector('#reset-filters') as HTMLElement;
 resetFilter.addEventListener('click', () => {
-    products.filteredData = [...data];
+    products.filteredData = [...data]; // moderated
     app.renderItems(products.filteredData);
-    checkBoxes.forEach((el) => (el.checked = false));
-=======
-const resetFilter = document.querySelector('#reset-filters') as HTMLElement;
-resetFilter.addEventListener('click', () => {
-    products.filteredData = data;
-    app.renderItems(products.filteredData);
->>>>>>> e0507db69aa2f275d33d9a94480c72e7cb3a77b6
+    checkBoxes.forEach((el) => (el.checked = false)); // moderated
 });
