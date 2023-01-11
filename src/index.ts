@@ -69,8 +69,8 @@ class Application {
             const buttonAdd = buttonContent.classList[0] === 'item__button_add';
             const buttonDetails = buttonContent.classList[0] === 'item__button_details';
             if (buttonContent.tagName === 'BUTTON' && buttonAdd) {
-                const dataID = Number(data[indexOfItem].id);
-                const dataPrice = Number(data[indexOfItem].price);
+                const dataID = Number(products.filteredData[indexOfItem].id);
+                const dataPrice = Number(products.filteredData[indexOfItem].price);
                 const product = { id: dataID, count: 1, price: dataPrice };
                 if (!storage.checkProduct(indexOfItem + 1)) {
                     buttonContent.innerText = 'DROP FROM CART';
@@ -109,17 +109,17 @@ class Application {
         this.renderItems(products.filter());
     }
 
-    public renderItems(data: IDataItem[]): void {
+    public renderItems(currentData: IDataItem[]): void {
         const itemsContainer = document.querySelector('.items') as HTMLElement;
         let htmlCatalog = '';
         const catalog = storage.getProducts();
 
-        if (data.length === 0) {
+        if (currentData.length === 0) {
             itemsContainer.innerHTML = 'Nothing to show';
             return;
         }
 
-        data.forEach((elem: IDataItem) => {
+        currentData.forEach((elem: IDataItem, index: number) => {
             let activeClass = '';
 
             if (catalog.indexOf(elem.id) === -1) {
@@ -147,7 +147,7 @@ class Application {
                         <h3>rating: ${elem.rating}</h3>
                     </div>
                 </div>
-                <div class="item__buttons ${elem.id}">
+                <div class="item__buttons ${index + 1}">
                 <button class="item__button_add">ADD TO CART</button>
                 <button class="item__button_details">DETAILS</button>
                 </div>
@@ -179,8 +179,8 @@ class Products {
     filteredRules: IDataItem[];
 
     constructor(data: IDataItem[]) {
-        this.data = data;
-        this.filteredData = data;
+        this.data = [...data];
+        this.filteredData = [...data];
         this.filteredRules = [];
     }
 
@@ -239,8 +239,11 @@ sortRatingDesc.addEventListener('click', () => {
     app.renderItems(products.filteredData);
 });
 
+const checkBoxes = document.querySelectorAll('input') as NodeListOf<HTMLInputElement>;
+
 const resetFilter = document.querySelector('#reset-filters') as HTMLElement;
 resetFilter.addEventListener('click', () => {
-    products.filteredData = data;
+    products.filteredData = [...data]; // moderated
     app.renderItems(products.filteredData);
+    checkBoxes.forEach((el) => (el.checked = false)); // moderated
 });
